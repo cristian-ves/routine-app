@@ -1,4 +1,6 @@
 import { format } from 'date-fns';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { ListItem } from '../';
 import { useRoutineStore } from '../../hooks/useRoutineStore';
@@ -6,7 +8,7 @@ import { useRoutineStore } from '../../hooks/useRoutineStore';
 
 export const Schedule = () => {
 
-	const { events } = useRoutineStore();
+	const { events, editEvent } = useRoutineStore();
 
 	return (
 		<>
@@ -16,10 +18,23 @@ export const Schedule = () => {
 
 				{
 					events.map(({ name, time }, i) => {
+						name = 'hola'
 						return (
 							<ListItem
 								text={name}
-								component={<p>{format(time, 'p')}</p>}
+								component={<DatePicker
+									selected={time}
+									// onChange={(date) => setStartDate(date)}
+									showTimeSelect
+									showTimeSelectOnly
+									timeIntervals={0}
+									timeCaption="Time"
+									dateFormat="h:mm aa"
+								/>}
+								onEdit={(event) => editEvent({
+									i,
+									event
+								})}
 								key={i}
 							/>
 						)
