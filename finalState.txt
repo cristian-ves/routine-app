@@ -1,0 +1,47 @@
+{
+	schedule:{
+		events: [
+			{
+				name: 'web dev',
+				time: new Date()
+			},
+			{
+				name: 'math class',
+				time: new Date()
+			},
+			{
+				name: 'homework',
+				time: new Date()
+			},
+
+		]	
+	},
+	todo:{
+		todos: [
+			{
+				name: 'feed turtles',
+				done: true
+			},
+			{
+				name: 'water plants',
+				done: true
+			},
+			{
+				name: 'call mom',
+				done: false
+			},
+		]
+	},
+	objective: {
+		objectives : [
+			{
+				name: 'focus',
+				progress: 50
+			},
+			{
+				name: 'discipline',
+				progress: 0
+			}
+		]
+	}
+}
