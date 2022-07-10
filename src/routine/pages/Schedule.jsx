@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 
 import { ListItem } from '../';
 import { useRoutineStore } from '../../hooks/useRoutineStore';
@@ -8,6 +7,7 @@ export const Schedule = () => {
 
 	const { events } = useRoutineStore();
 
+
 	return (
 		<>
 			<h1>Schedule</h1>
@@ -15,11 +15,23 @@ export const Schedule = () => {
 			<ul>
 
 				{
-					events.map(({ name, time }, i) => {
+					events.map((event, i) => {
+
 						return (
 							<ListItem
-								text={name}
-								component={<p>{format(time, 'p')}</p>}
+								event={event}
+								/* component={
+									<DatePicker
+										// onChange={(date) => setStartDate(date)}
+										dateFormat="h:mm aa"
+										disabled
+										selected={time}
+										showTimeSelect
+										showTimeSelectOnly
+										timeCaption="Time"
+										timeIntervals={15}
+									/>
+								} */
 								key={i}
 							/>
 						)

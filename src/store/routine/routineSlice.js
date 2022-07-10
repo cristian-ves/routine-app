@@ -82,15 +82,18 @@ export const routineSlice = createSlice({
 		events: [
 			{
 				name: 'web dev',
-				time: new Date().getTime()
+				time: new Date().getTime(),
+				id: 0
 			},
 			{
 				name: 'math class',
-				time: new Date().getTime()
+				time: new Date().getTime(),
+				id: 1
 			},
 			{
 				name: 'homework',
-				time: new Date().getTime()
+				time: new Date().getTime(),
+				id: 2
 			},
 		],
 		tasks: [
@@ -130,8 +133,28 @@ export const routineSlice = createSlice({
 		},
 		onAddObjective: (state, { payload }) => {
 			state.objectives = [...state.objectives, payload]
-		}
+		},
+
+		onEditEvent: (state, { payload }) => {
+			state.events = state.events.map(
+				event => {
+					return event.id === payload.id
+						? payload
+						: event
+
+				}
+			)
+
+		},
+
+		onDeleteEvent: (state, { payload }) => {
+			state.events = state.events.filter(event => event.id !== payload);
+		},
 	}
 });
 
-export const { onAddDay, onAddEvent, onAddTask, onAddObjective } = routineSlice.actions;
+export const {
+	onAddDay, onAddEvent, onAddTask, onAddObjective,
+	onEditEvent,
+	onDeleteEvent,
+} = routineSlice.actions;
