@@ -1,5 +1,5 @@
 
-export const ListItemEvent = ({ event, useList, children }) => {
+export const ListItem = ({ event, useList, children }) => {
 	//The children is the second component (progressBar, checkbox, dateTimePicker), while the useList is a hook that allows to get the change funcions of both childrens
 
 	const [

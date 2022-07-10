@@ -99,25 +99,30 @@ export const routineSlice = createSlice({
 		tasks: [
 			{
 				name: 'feed turtles',
-				done: false
+				done: false,
+				id: 0
 			},
 			{
 				name: 'water plants',
-				done: true
+				done: true,
+				id: 1
 			},
 			{
 				name: 'call mom',
-				done: false
+				done: false,
+				id: 2
 			},
 		],
 		objectives: [
 			{
 				name: 'focus',
-				progress: 50
+				progress: 50,
+				id: 1
 			},
 			{
 				name: 'discipline',
-				progress: 0
+				progress: 0,
+				id: 2
 			}
 		]
 	},
@@ -137,12 +142,24 @@ export const routineSlice = createSlice({
 
 		onEditEvent: (state, { payload }) => {
 			state.events = state.events.map(
-				event => {
-					return event.id === payload.id
-						? payload
-						: event
+				event => event.id === payload.id
+					? payload
+					: event
+			)
+		},
+		onEditTask: (state, { payload }) => {
+			state.tasks = state.tasks.map(
+				task => task.id === payload.id
+					? payload
+					: task
+			)
 
-				}
+		},
+		onEditObjective: (state, { payload }) => {
+			state.objectives = state.objectives.map(
+				objective => objective.id === payload.id
+					? payload
+					: objective
 			)
 
 		},
@@ -152,11 +169,21 @@ export const routineSlice = createSlice({
 				event.id !== payload
 			);
 		},
+		onDeleteTask: (state, { payload }) => {
+			state.tasks = state.tasks.filter(task =>
+				task.id !== payload
+			);
+		},
+		onDeleteObjective: (state, { payload }) => {
+			state.objectives = state.objectives.filter(objective =>
+				objective.id !== payload
+			);
+		},
 	}
 });
 
 export const {
 	onAddDay, onAddEvent, onAddTask, onAddObjective,
-	onEditEvent,
-	onDeleteEvent,
+	onEditEvent, onEditTask, onEditObjective,
+	onDeleteEvent, onDeleteTask, onDeleteObjective
 } = routineSlice.actions;

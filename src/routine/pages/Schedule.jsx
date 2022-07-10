@@ -1,7 +1,7 @@
 
 import DatePicker from "react-datepicker";
 
-import { ListItemEvent } from '../';
+import { ListItem } from '../';
 import { useRoutineStore, useListItemEvent } from '../../hooks/';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -30,7 +30,7 @@ export const Schedule = () => {
 					events.map((event, i) => {
 
 						return (
-							<ListItemEvent
+							<ListItem
 								event={event}
 								key={i}
 								useList={useListItemEvent}
@@ -48,7 +48,7 @@ export const Schedule = () => {
 										/>
 									)
 								}}
-							</ListItemEvent>
+							</ListItem>
 						)
 					})
 				}

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { onAddEvent, onAddTask, onAddObjective, onAddDay, onEditEvent, onDeleteEvent } from '../store';
+import { onAddEvent, onAddTask, onAddObjective, onAddDay, onEditEvent, onDeleteEvent, onEditTask, onDeleteTask, onEditObjective, onDeleteObjective } from '../store';
 
 
 export const useRoutineStore = () => {
@@ -14,8 +14,12 @@ export const useRoutineStore = () => {
 	const addDay = day => dispatch(onAddDay(day));
 
 	const editEvent = event => dispatch(onEditEvent(event));
+	const editTask = task => dispatch(onEditTask(task));
+	const editObjective = objective => dispatch(onEditObjective(objective));
 
 	const deleteEvent = id => dispatch(onDeleteEvent(id));
+	const deleteTask = id => dispatch(onDeleteTask(id));
+	const deleteObjective = id => dispatch(onDeleteObjective(id));
 
 	return {
 		//* properties
@@ -31,7 +35,11 @@ export const useRoutineStore = () => {
 		addDay,
 
 		editEvent,
+		editTask,
+		editObjective,
 
 		deleteEvent,
+		deleteTask,
+		deleteObjective
 	}
 }
