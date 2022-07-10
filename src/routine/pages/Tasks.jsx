@@ -1,5 +1,5 @@
 
-import { ListItem } from '../';
+import { ListItemEvent } from '../';
 import { useRoutineStore } from '../../hooks/useRoutineStore';
 
 export const Tasks = () => {
@@ -13,7 +13,7 @@ export const Tasks = () => {
 			{
 				tasks.map(({ name, done }, i) => {
 					return (
-						<ListItem
+						<ListItemEvent
 							text={name}
 							component={
 								<input

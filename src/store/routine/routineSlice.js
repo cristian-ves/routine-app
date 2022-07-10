@@ -148,7 +148,9 @@ export const routineSlice = createSlice({
 		},
 
 		onDeleteEvent: (state, { payload }) => {
-			state.events = state.events.filter(event => event.id !== payload);
+			state.events = state.events.filter(event =>
+				event.id !== payload
+			);
 		},
 	}
 });

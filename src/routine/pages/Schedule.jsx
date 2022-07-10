@@ -1,11 +1,23 @@
 
-import { ListItem } from '../';
-import { useRoutineStore } from '../../hooks/useRoutineStore';
+import DatePicker from "react-datepicker";
 
+import { ListItemEvent } from '../';
+import { useRoutineStore, useListItemEvent } from '../../hooks/';
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Schedule = () => {
 
-	const { events } = useRoutineStore();
+	const { events, addEvent } = useRoutineStore();
+
+	const handleAddEvent = () => {
+		const id = new Date().getTime();
+		addEvent({
+			name: '',
+			time: id,
+			id
+		});
+	}
 
 
 	return (
@@ -18,28 +30,35 @@ export const Schedule = () => {
 					events.map((event, i) => {
 
 						return (
-							<ListItem
+							<ListItemEvent
 								event={event}
-								/* component={
-									<DatePicker
-										// onChange={(date) => setStartDate(date)}
-										dateFormat="h:mm aa"
-										disabled
-										selected={time}
-										showTimeSelect
-										showTimeSelectOnly
-										timeCaption="Time"
-										timeIntervals={15}
-									/>
-								} */
 								key={i}
-							/>
+								useList={useListItemEvent}
+							>
+								{(change, value) => {
+									return (
+										<DatePicker
+											dateFormat="h:mm aa"
+											onChange={change}
+											selected={value}
+											showTimeSelect
+											showTimeSelectOnly
+											timeCaption="Time"
+											timeIntervals={15}
+										/>
+									)
+								}}
+							</ListItemEvent>
 						)
 					})
 				}
 
 			</ul>
-			<i className="fa-solid fa-plus"></i>
+			<button
+				onClick={handleAddEvent}
+			>
+				<i className="fa-solid fa-plus"></i>
+			</button>
 		</>
 	)
 }

@@ -1,54 +1,29 @@
-import { useEffect, useState } from 'react'
-import { useForm } from '../../hooks/useform'
-import DatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
-import { useRoutineStore } from '../../hooks/useRoutineStore';
+export const ListItemEvent = ({ event, useList, children }) => {
+	//The children is the second component (progressBar, checkbox, dateTimePicker), while the useList is a hook that allows to get the change funcions of both childrens
 
-export const ListItem = ({ event }) => {
-
-	const { id } = event;
-	const { editEvent, deleteEvent } = useRoutineStore();
-
-	const [formValues, handleInputChange] = useForm({
-		name: event.name
-	});
-	const { name } = formValues;
-
-	const [time, setTime] = useState(event.time);
-
-	useEffect(() => {
-
-		editEvent({
-			time: (typeof time === 'number') ? time : Date.parse(time),
-			name,
-			id
-		});
-
-	}, [time, name, id]);
-
+	const [
+		handleInputChange,
+		handleDatePickerChange,
+		deleteEvent,
+		childrenValue
+	] = useList(event);
 
 	return (
 		<li>
 			<input
+				autoComplete="off"
 				name="name"
 				onChange={handleInputChange}
 				type="text"
-				value={name}
+				value={event.name}
 			/>
-			<DatePicker
-				dateFormat="h:mm aa"
-				onChange={date => setTime(date)}
-				selected={time}
-				showTimeSelect
-				showTimeSelectOnly
-				timeCaption="Time"
-				timeIntervals={15}
-
-			/>
+			{children(handleDatePickerChange, childrenValue)}
 			<button
 				onClick={
-					() => deleteEvent(id)
+					() => {
+						deleteEvent(event.id)
+					}
 				}
 			>
 				<i className="fa-solid fa-trash-can"></i>

@@ -1,6 +1,6 @@
 import { Slider } from '@mui/material';
 import React from 'react'
-import { ListItem } from '../';
+import { ListItemEvent } from '../';
 import { useRoutineStore } from '../../hooks/useRoutineStore';
 
 export const Objectives = () => {
@@ -14,7 +14,7 @@ export const Objectives = () => {
 			{
 				objectives.map(({ name, progress }, i) => {
 					return (
-						<ListItem
+						<ListItemEvent
 							text={name}
 							component={
 								<Slider
