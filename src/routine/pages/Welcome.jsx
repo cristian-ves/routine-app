@@ -14,8 +14,6 @@ export const Welcome = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const events = JSON.parse(localStorage.getItem('events'));
-		loadEvents(events)
 		addUser({ displayName, uid: '' });
 	}
 

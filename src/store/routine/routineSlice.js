@@ -186,6 +186,12 @@ export const routineSlice = createSlice({
 
 		onLoadEvents: (state, { payload }) => {
 			state.events = payload;
+		},
+		onLoadTasks: (state, { payload }) => {
+			state.tasks = payload;
+		},
+		onLoadObjectives: (state, { payload }) => {
+			state.objectives = payload;
 		}
 	}
 });
@@ -194,5 +200,5 @@ export const {
 	onAddDay, onAddEvent, onAddTask, onAddObjective,
 	onEditEvent, onEditTask, onEditObjective,
 	onDeleteEvent, onDeleteTask, onDeleteObjective,
-	onLoadEvents
+	onLoadEvents, onLoadTasks, onLoadObjectives
 } = routineSlice.actions;

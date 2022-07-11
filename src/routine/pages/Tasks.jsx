@@ -1,10 +1,23 @@
 
-import { useRoutineStore, useListItemTask } from '../../hooks';
+import { useEffect } from 'react';
+
+import { useRoutineStore, useListItemTask, useUserStore, useSave } from '../../hooks';
 import { List } from './List';
 
 export const Tasks = () => {
 
-	const { tasks, addTask } = useRoutineStore();
+	const { tasks, addTask, loadTasks } = useRoutineStore();
+	const { uid } = useUserStore();
+	const { handleSaveTasks } = useSave();
+
+	useEffect(() => {
+		if (!uid) {
+			const tasks = JSON.parse(localStorage.getItem('tasks'));
+			Array.isArray(tasks) && loadTasks(tasks);
+		} else {
+			//load tasks from backend
+		}
+	}, [])
 
 	const handleAddEvent = () => {
 		addTask({
@@ -21,7 +34,7 @@ export const Tasks = () => {
 				hook={useListItemTask}
 				list={tasks}
 				title='Tasks'
-
+				save={handleSaveTasks}
 			>
 				{
 					(change, value) =>

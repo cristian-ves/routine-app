@@ -1,10 +1,17 @@
 
 import { ListItem } from '../';
 
-export const List = ({ children, list, title, handleAddItem, hook }) => {
+export const List = ({ children, list, title, handleAddItem, hook, save }) => {
 	return (
 		<>
-			<h1 className="text-3xl font-bold underline">{title}</h1>
+			<div>
+				<h1 className="text-3xl font-bold underline">{title}</h1>
+				<button
+					onClick={save}
+				>
+					<i className="fa-solid fa-floppy-disk"></i>
+				</button>
+			</div>
 			<ul>
 
 				{
