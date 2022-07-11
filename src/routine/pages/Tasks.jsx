@@ -1,6 +1,6 @@
 
 import { useRoutineStore, useListItemTask } from '../../hooks';
-import { ListItem } from '../';
+import { List } from './List';
 
 export const Tasks = () => {
 
@@ -16,40 +16,24 @@ export const Tasks = () => {
 
 	return (
 		<>
-			<h1>Tasks</h1>
-			<ul>
+			<List
+				handleAddItem={handleAddEvent}
+				hook={useListItemTask}
+				list={tasks}
+				title='Tasks'
 
-				{
-					tasks.map((task, i) => {
-						return (
-							<ListItem
-								event={task}
-								useList={useListItemTask}
-								key={i}
-							>
-								{
-									(change, value) =>
-									(
-										<input
-											type="checkbox"
-											onChange={change}
-											checked={value}
-										/>
-									)
-								}
-							</ListItem>
-						)
-					})
-				}
-
-			</ul>
-
-			<button
-				onClick={handleAddEvent}
 			>
-				<i className="fa-solid fa-plus"></i>
-			</button>
-
+				{
+					(change, value) =>
+					(
+						<input
+							type="checkbox"
+							onChange={change}
+							checked={value}
+						/>
+					)
+				}
+			</List>
 		</>
 	)
 }

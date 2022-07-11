@@ -1,9 +1,13 @@
+import { memo } from 'react'
 import { Route, Routes, Navigate } from "react-router"
+
+import { useRoutineStore, useUserStore } from '../hooks'
 import { History, Home, Navbar, Objectives, Schedule, Settings, Tasks } from '../routine'
 import { NavbarList } from '../routine/components/NavbarList'
 
 
-export const DashboardRoutes = () => {
+export const DashboardRoutes = memo(() => {
+
 	return (
 		<header>
 			<Navbar />
@@ -24,4 +28,4 @@ export const DashboardRoutes = () => {
 
 		</header>
 	)
-}
+})

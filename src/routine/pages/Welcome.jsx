@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRoutineStore } from '../../hooks';
 import { useForm } from '../../hooks/useform';
 import { useUserStore } from '../../hooks/useUserStore'
 import { InputButton } from '../components/InputButton'
@@ -6,12 +7,15 @@ import { InputButton } from '../components/InputButton'
 export const Welcome = () => {
 
 	const { addUser } = useUserStore();
+	const { loadEvents } = useRoutineStore();
 
 	const [formValues, handleInputChange] = useForm({ displayName: '' });
 	const { displayName } = formValues;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const events = JSON.parse(localStorage.getItem('events'));
+		loadEvents(events)
 		addUser({ displayName, uid: '' });
 	}
 

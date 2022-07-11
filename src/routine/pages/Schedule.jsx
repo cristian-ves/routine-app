@@ -1,8 +1,8 @@
 
 import DatePicker from "react-datepicker";
 
-import { ListItem } from '../';
 import { useRoutineStore, useListItemEvent } from '../../hooks/';
+import { List } from './List';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -22,43 +22,26 @@ export const Schedule = () => {
 
 	return (
 		<>
-			<h1>Schedule</h1>
-			<span>at time</span>
-			<ul>
-
-				{
-					events.map((event, i) => {
-
-						return (
-							<ListItem
-								event={event}
-								key={i}
-								useList={useListItemEvent}
-							>
-								{(change, value) => {
-									return (
-										<DatePicker
-											dateFormat="h:mm aa"
-											onChange={change}
-											selected={value}
-											showTimeSelect
-											showTimeSelectOnly
-											timeCaption="Time"
-											timeIntervals={15}
-										/>
-									)
-								}}
-							</ListItem>
-						)
-					})
-				}
-
-			</ul>
-			<button
-				onClick={handleAddEvent}
+			<List
+				handleAddItem={handleAddEvent}
+				hook={useListItemEvent}
+				list={events}
+				title='Schedule'
 			>
-				<i className="fa-solid fa-plus"></i>
-			</button>
+				{(change, value) => {
+					return (
+						<DatePicker
+							dateFormat="h:mm aa"
+							onChange={change}
+							selected={value}
+							showTimeSelect
+							showTimeSelectOnly
+							timeCaption="Time"
+							timeIntervals={15}
+						/>
+					)
+				}}
+			</List>
 		</>
 	)
 }

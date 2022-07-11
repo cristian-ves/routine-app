@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { onAddEvent, onAddTask, onAddObjective, onAddDay, onEditEvent, onDeleteEvent, onEditTask, onDeleteTask, onEditObjective, onDeleteObjective } from '../store';
+import { onAddEvent, onAddTask, onAddObjective, onAddDay, onEditEvent, onDeleteEvent, onEditTask, onDeleteTask, onEditObjective, onDeleteObjective, onLoadEvents } from '../store';
 
 
 export const useRoutineStore = () => {
@@ -21,6 +22,10 @@ export const useRoutineStore = () => {
 	const deleteTask = id => dispatch(onDeleteTask(id));
 	const deleteObjective = id => dispatch(onDeleteObjective(id));
 
+	const loadEvents = events => dispatch(onLoadEvents(events));
+
+
+
 	return {
 		//* properties
 		events,
@@ -40,6 +45,9 @@ export const useRoutineStore = () => {
 
 		deleteEvent,
 		deleteTask,
-		deleteObjective
+		deleteObjective,
+
+		loadEvents
+
 	}
 }

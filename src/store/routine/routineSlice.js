@@ -5,7 +5,11 @@ import { createSlice } from '@reduxjs/toolkit';
 export const routineSlice = createSlice({
 	name: 'routine',
 	initialState: {
-		days: [
+		days: [],
+		events: [],
+		tasks: [],
+		objectives: [],
+		/* days: [
 
 			{
 				events: [],
@@ -124,7 +128,7 @@ export const routineSlice = createSlice({
 				progress: 0,
 				id: 2
 			}
-		]
+		] */
 	},
 	reducers: {
 		onAddDay: (state, { payload }) => {
@@ -179,11 +183,16 @@ export const routineSlice = createSlice({
 				objective.id !== payload
 			);
 		},
+
+		onLoadEvents: (state, { payload }) => {
+			state.events = payload;
+		}
 	}
 });
 
 export const {
 	onAddDay, onAddEvent, onAddTask, onAddObjective,
 	onEditEvent, onEditTask, onEditObjective,
-	onDeleteEvent, onDeleteTask, onDeleteObjective
+	onDeleteEvent, onDeleteTask, onDeleteObjective,
+	onLoadEvents
 } = routineSlice.actions;
