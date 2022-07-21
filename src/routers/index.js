@@ -1,5 +1,4 @@
 
 export * from './AppRouter';
-export * from './PrivateRoute'
-export * from './PublicRoute'
-export * from './DashBoardRoutes'
+export * from './AuthRoutes';
+export * from './DashBoardRoutes';

@@ -1,7 +1,6 @@
-import { memo } from 'react'
-import { Route, Routes, Navigate } from "react-router"
+import { memo } from 'react';
+import { Route, Routes, Navigate } from "react-router";
 
-import { useRoutineStore, useUserStore } from '../hooks'
 import { History, Home, Navbar, Objectives, Schedule, Settings, Tasks } from '../routine'
 import { NavbarList } from '../routine/components/NavbarList'
 
@@ -20,10 +19,7 @@ export const DashboardRoutes = memo(() => {
 				<Route path='/objectives' element={<Objectives />} />
 				<Route path='/history' element={<History />} />
 				<Route path='/settings' element={<Settings />} />
-				<Route
-					path="*"
-					element={<Navigate to="/" replace />}
-				/>
+				<Route path="/*" element={<Navigate to="/" replace />} />
 			</Routes>
 
 		</header>

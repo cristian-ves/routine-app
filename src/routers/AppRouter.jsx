@@ -1,33 +1,22 @@
-import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react';
+import { Spinner } from '../auth';
+import { useAuthStore } from '../hooks'
 
-import { PublicRoute, PrivateRouter, DashboardRoutes } from './'
-import { Welcome } from '../routine'
+import { DashboardRoutes, AuthRoutes } from './'
 
 export const AppRouter = () => {
 
-	return (
-		<Routes>
+	const { status, checkUserExistence } = useAuthStore();
 
-			<Route
-				path='/welcome/'
-				element={
-					<PublicRoute>
-						<Welcome />
-					</PublicRoute>
-				}
-			/>
+	useEffect(() => {
+		checkUserExistence();
+	}, []);
 
-			<Route
-				path='/*'
-				element={
-					<PrivateRouter>
-						<DashboardRoutes />
-					</PrivateRouter>
-				}
-			/>
+	if (status == 'checking') {
+		return (<Spinner color="#5c96f8" />)
+	}
 
-
-
-		</Routes>
-	)
+	return (status === 'not-authenticated')
+		? <AuthRoutes />
+		: <DashboardRoutes />
 }

@@ -8,7 +8,6 @@ export * from './components/HistoryBox';
 
 
 // Pages
-export * from './pages/Welcome';
 export * from './pages/Home';
 export * from './pages/Schedule';
 export * from './pages/Tasks';

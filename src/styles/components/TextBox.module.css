@@ -1,0 +1,52 @@
+.container {
+	margin: 1rem auto;
+	--color: #5757577e;
+	--error: #d14a4a;
+}
+
+.group {
+	position: relative;
+}
+
+.input {
+	width: 100%;
+	font-size: 1rem;
+	color: rgb(99, 99, 99);
+	padding: .6rem .3rem;
+	border: none;
+	outline: none;
+
+	border-bottom: 2px solid var(--color);
+}
+
+.error-message {
+	display: none;
+	color: var(--error);
+	font-size: 0.8rem;
+	margin: 0.3rem;
+}
+
+.error .error-message {
+	display: block;
+}
+
+.error .group .input {
+	border-bottom: 2px solid var(--error);
+}
+
+.info {
+	color: var(--color);
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	left: 5px;
+	transform: translateY(10px);
+	transition: transform .5s, color .3s;
+}
+
+.input:focus+.info,
+.input:not(:placeholder-shown)+.info {
+	transform: translateY(-12px) scale(.8);
+	transform-origin: top left;
+	--color: #4f5e8a;
+}

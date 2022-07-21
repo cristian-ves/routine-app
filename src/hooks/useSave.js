@@ -1,10 +1,11 @@
-import { useRoutineStore, useUserStore } from './';
+import { useRoutineStore, useAuthStore } from './';
 
 export const useSave = () => {
 	// A hook to handle the save in the database if the user is not logged and in the database if is logged
 
 	const { events, tasks, objectives } = useRoutineStore();
-	const { uid } = useUserStore();
+	const { user } = useAuthStore();
+	const { uid } = user;
 
 	const handleSaveTasks = () => {
 		if (!uid) {
@@ -30,10 +31,17 @@ export const useSave = () => {
 		}
 	}
 
+	const saveAll = () => {
+		handleSaveEvents();
+		handleSaveTasks();
+		handleSaveObjectives();
+	}
+
 	return {
 		handleSaveEvents,
 		handleSaveTasks,
 		handleSaveObjectives,
+		saveAll
 	}
 
 }

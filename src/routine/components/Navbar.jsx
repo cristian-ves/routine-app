@@ -1,13 +1,14 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 
-import { useUserStore } from '../../hooks/useUserStore';
 import { CombinatedLogo } from './CombinatedLogo';
+import { useAuthStore } from '../../hooks';
 
 export const Navbar = () => {
 
 
-	const { displayName } = useUserStore();
+	const { user } = useAuthStore();
+	const { name } = user;
 	// const { user, dispatch } = useContext(AuthContext);
 	// const { name } = user;
 
@@ -29,7 +30,7 @@ export const Navbar = () => {
 			<CombinatedLogo />
 			<p>{format(new Date(), 'PPP')}</p>
 			<div>
-				<span>{displayName}</span>&ensp;
+				<span>{name}</span>&ensp;
 				<i className="fa-solid fa-user"></i>
 			</div>
 		</nav>

@@ -4,7 +4,7 @@ import { routineSlice } from './routine/routineSlice';
 
 export const store = configureStore({
 	reducer: {
-		user: authSlice.reducer,
+		auth: authSlice.reducer,
 		routine: routineSlice.reducer
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({

@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
-import { useRoutineStore, useListItemEvent, useUserStore, useSave } from '../../hooks/';
+import { useRoutineStore, useListItemEvent, useSave, useAuthStore } from '../../hooks/';
 import { List } from './List';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,7 +11,8 @@ export const Schedule = () => {
 
 	const { handleSaveEvents } = useSave();
 	const { events, addEvent, loadEvents } = useRoutineStore();
-	const { uid } = useUserStore();
+	const { user } = useAuthStore();
+	const { uid } = user;
 
 
 	useEffect(() => {

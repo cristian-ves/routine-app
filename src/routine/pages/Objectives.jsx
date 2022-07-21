@@ -1,13 +1,14 @@
 import { Slider } from '@mui/material';
 import { useEffect } from 'react';
 
-import { useRoutineStore, useListItemObjective, useUserStore, useSave } from '../../hooks/';
+import { useRoutineStore, useListItemObjective, useSave, useAuthStore } from '../../hooks/';
 import { List } from './List';
 
 export const Objectives = () => {
 
 	const { objectives, addObjective, loadObjectives } = useRoutineStore();
-	const { uid } = useUserStore();
+	const { user } = useAuthStore();
+	const { uid } = user;
 	const { handleSaveObjectives } = useSave();
 
 	useEffect(() => {

@@ -3,13 +3,7 @@ import { useSave } from '../../hooks';
 
 export const Home = () => {
 
-	const { handleSaveEvents, handleSaveTasks, handleSaveObjectives } = useSave();
-
-	const saveAll = () => {
-		handleSaveEvents();
-		handleSaveTasks();
-		handleSaveObjectives();
-	}
+	const { saveAll } = useSave();
 
 	return (
 		<>

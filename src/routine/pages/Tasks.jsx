@@ -1,13 +1,14 @@
 
 import { useEffect } from 'react';
 
-import { useRoutineStore, useListItemTask, useUserStore, useSave } from '../../hooks';
+import { useRoutineStore, useListItemTask, useSave, useAuthStore } from '../../hooks';
 import { List } from './List';
 
 export const Tasks = () => {
 
 	const { tasks, addTask, loadTasks } = useRoutineStore();
-	const { uid } = useUserStore();
+	const { user } = useAuthStore();
+	const { uid } = user;
 	const { handleSaveTasks } = useSave();
 
 	useEffect(() => {
