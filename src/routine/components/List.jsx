@@ -1,12 +1,12 @@
 
-import { ListItem } from '..';
+import { ListItem, SavingSpinner } from '..';
 
-export const List = ({ children, list, title, handleAddItem, hook, spinner }) => {
+export const List = ({ children, list, title, handleAddItem, hook, componentName }) => {
 	return (
 		<>
 			<div>
 				<h1 className="">{title}</h1>
-				{spinner}
+				<SavingSpinner componentName={componentName} />
 			</div>
 			<ul>
 

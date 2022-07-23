@@ -18,7 +18,7 @@ export const useAutoSave = (values, save) => {
 			save(values);
 			clearMessage();
 
-		}, 3000),
+		}, 2000),
 		[]
 	);
 

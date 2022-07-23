@@ -1,7 +1,8 @@
 
 import { useEffect } from 'react';
+
 import { useTasksStore, useListItemTask } from '../../hooks';
-import { List, SavingSpinner } from '../';
+import { List } from '../';
 
 export const Tasks = () => {
 
@@ -19,7 +20,7 @@ export const Tasks = () => {
 			hook={useListItemTask}
 			list={tasks}
 			title='Tasks'
-			spinner={<SavingSpinner componentName='tasks' />}
+			componentName='tasks'
 		>
 			{
 				(change, value) =>
