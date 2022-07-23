@@ -20,10 +20,11 @@ export const useListItemEvent = (event) => {
 		});
 	}
 
+
 	return [
 		handleInputChange,
 		handleDatePickerChange,
 		deleteEvent,
-		event.time
+		event.time,
 	]
 }

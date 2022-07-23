@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authSlice } from './auth/authSlice';
-import { routineSlice } from './routine/routineSlice';
+import { authSlice, routineSlice, tasksSlice, uiSlice } from './';
 
 export const store = configureStore({
 	reducer: {
 		auth: authSlice.reducer,
-		routine: routineSlice.reducer
+		routine: routineSlice.reducer,
+		tasks: tasksSlice.reducer,
+		ui: uiSlice.reducer
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({
 		serializableCheck: false

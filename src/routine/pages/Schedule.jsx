@@ -2,8 +2,8 @@
 import { useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
-import { useRoutineStore, useListItemEvent, useSave, useAuthStore } from '../../hooks/';
-import { List } from './List';
+import { useRoutineStore, useListItemEvent, useSave, useAuthStore, useAutoSave } from '../../hooks/';
+import { List } from '../components/List';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -16,6 +16,7 @@ export const Schedule = () => {
 
 
 	useEffect(() => {
+		//Todo: load files propertly
 		if (!uid) {
 			const events = JSON.parse(localStorage.getItem('events'));
 			Array.isArray(events) && loadEvents(events)

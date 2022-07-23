@@ -1,24 +1,28 @@
+import { useAutoSave } from '../../hooks';
 
 export const ListItem = ({ event, useList, children }) => {
 	//The children is the second component (progressBar, checkbox, dateTimePicker), while the useList is a hook that allows to get the change funcions of both childrens
 
 	const [
-		handleInputChange,
-		handleDatePickerChange,
+		onInputChange,
+		onChildrenChange,
 		deleteEvent,
-		childrenValue
+		childrenValue,
+		autoSave,
 	] = useList(event);
+
+	useAutoSave(event, autoSave);
 
 	return (
 		<li>
 			<input
 				autoComplete="off"
 				name="name"
-				onChange={handleInputChange}
+				onChange={onInputChange}
 				type="text"
 				value={event.name}
 			/>
-			{children(handleDatePickerChange, childrenValue)}
+			{children(onChildrenChange, childrenValue)}
 			<button
 				onClick={
 					() => {

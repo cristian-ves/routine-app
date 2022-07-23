@@ -2,7 +2,7 @@ import { Slider } from '@mui/material';
 import { useEffect } from 'react';
 
 import { useRoutineStore, useListItemObjective, useSave, useAuthStore } from '../../hooks/';
-import { List } from './List';
+import { List } from '../components/List';
 
 export const Objectives = () => {
 

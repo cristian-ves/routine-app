@@ -151,14 +151,6 @@ export const routineSlice = createSlice({
 					: event
 			)
 		},
-		onEditTask: (state, { payload }) => {
-			state.tasks = state.tasks.map(
-				task => task.id === payload.id
-					? payload
-					: task
-			)
-
-		},
 		onEditObjective: (state, { payload }) => {
 			state.objectives = state.objectives.map(
 				objective => objective.id === payload.id
@@ -171,11 +163,6 @@ export const routineSlice = createSlice({
 		onDeleteEvent: (state, { payload }) => {
 			state.events = state.events.filter(event =>
 				event.id !== payload
-			);
-		},
-		onDeleteTask: (state, { payload }) => {
-			state.tasks = state.tasks.filter(task =>
-				task.id !== payload
 			);
 		},
 		onDeleteObjective: (state, { payload }) => {
@@ -197,8 +184,8 @@ export const routineSlice = createSlice({
 });
 
 export const {
-	onAddDay, onAddEvent, onAddTask, onAddObjective,
-	onEditEvent, onEditTask, onEditObjective,
-	onDeleteEvent, onDeleteTask, onDeleteObjective,
-	onLoadEvents, onLoadTasks, onLoadObjectives
+	onAddDay, onAddEvent, onAddObjective,
+	onEditEvent, onEditObjective,
+	onDeleteEvent, onDeleteObjective,
+	onLoadEvents, onLoadObjectives
 } = routineSlice.actions;

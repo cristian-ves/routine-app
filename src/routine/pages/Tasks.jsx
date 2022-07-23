@@ -1,53 +1,36 @@
 
 import { useEffect } from 'react';
-
-import { useRoutineStore, useListItemTask, useSave, useAuthStore } from '../../hooks';
-import { List } from './List';
+import { useTasksStore, useListItemTask } from '../../hooks';
+import { List, SavingSpinner } from '../';
 
 export const Tasks = () => {
 
-	const { tasks, addTask, loadTasks } = useRoutineStore();
-	const { user } = useAuthStore();
-	const { uid } = user;
-	const { handleSaveTasks } = useSave();
+	const { tasks, addTask, loadTasks } = useTasksStore();
 
 	useEffect(() => {
-		if (!uid) {
-			const tasks = JSON.parse(localStorage.getItem('tasks'));
-			Array.isArray(tasks) && loadTasks(tasks);
-		} else {
-			//load tasks from backend
-		}
-	}, [])
+		loadTasks();
+	}, []);
 
-	const handleAddEvent = () => {
-		addTask({
-			name: '',
-			done: false,
-			id: new Date().getTime()
-		});
-	}
+
 
 	return (
-		<>
-			<List
-				handleAddItem={handleAddEvent}
-				hook={useListItemTask}
-				list={tasks}
-				title='Tasks'
-				save={handleSaveTasks}
-			>
-				{
-					(change, value) =>
-					(
-						<input
-							type="checkbox"
-							onChange={change}
-							checked={value}
-						/>
-					)
-				}
-			</List>
-		</>
+		<List
+			handleAddItem={addTask}
+			hook={useListItemTask}
+			list={tasks}
+			title='Tasks'
+			spinner={<SavingSpinner componentName='tasks' />}
+		>
+			{
+				(change, value) =>
+				(
+					<input
+						type="checkbox"
+						onChange={change}
+						checked={value}
+					/>
+				)
+			}
+		</List >
 	)
 }

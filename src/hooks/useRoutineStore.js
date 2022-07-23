@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { onAddEvent, onAddTask, onAddObjective, onAddDay, onEditEvent, onDeleteEvent, onEditTask, onDeleteTask, onEditObjective, onDeleteObjective, onLoadEvents, onLoadTasks, onLoadObjectives } from '../store';
 
@@ -7,7 +6,7 @@ export const useRoutineStore = () => {
 
 	const dispatch = useDispatch();
 
-	const { events, tasks, objectives, days } = useSelector(state => state.routine);
+	const { events, /* tasks, */ objectives, days } = useSelector(state => state.routine);
 
 	const addEvent = event => dispatch(onAddEvent(event));
 	const addTask = task => dispatch(onAddTask(task));
@@ -37,20 +36,20 @@ export const useRoutineStore = () => {
 
 		//* methods
 		addEvent,
-		addTask,
+		// addTask,
 		addObjective,
 		addDay,
 
 		editEvent,
-		editTask,
+		// editTask,
 		editObjective,
 
 		deleteEvent,
-		deleteTask,
+		// deleteTask,
 		deleteObjective,
 
 		loadEvents,
-		loadTasks,
+		// loadTasks,
 		loadObjectives
 
 	}
