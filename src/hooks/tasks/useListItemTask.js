@@ -27,7 +27,7 @@ export const useListItemTask = (task) => {
 			//Save task in backend
 		} else {
 			// update localStorage task
-			let storageTasks = JSON.parse(localStorage.getItem('tasks'));
+			let storageTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 			storageTasks = storageTasks.map(storageTask => (
 				(storageTask.id == task.id) ? task : storageTask
 			));

@@ -6,6 +6,7 @@ export * from './components/InputButton';
 export * from './components/List';
 export * from './components/ListItem';
 export * from './components/Navbar';
+export * from './components/NavbarList';
 export * from './components/SavingSpinner';
 
 

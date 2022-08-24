@@ -6,11 +6,7 @@ import { useListItemObjective, useObjectivesStore } from '../../hooks';
 
 export const Objectives = () => {
 
-	const { objectives, addObjective, loadObjectives } = useObjectivesStore();
-
-	useEffect(() => {
-		loadObjectives();
-	}, []);
+	const { objectives, addObjective } = useObjectivesStore();
 
 	return (
 		<>

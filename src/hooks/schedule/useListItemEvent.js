@@ -27,7 +27,7 @@ export const useListItemEvent = (event) => {
 			//Update task in backend
 		} else {
 			// update localStorage task
-			let storageEvents = JSON.parse(localStorage.getItem('events'));
+			let storageEvents = JSON.parse(localStorage.getItem('events')) || [];
 			storageEvents = storageEvents.map(storageEvent => (
 				(storageEvent.id == event.id) ? event : storageEvent
 			));

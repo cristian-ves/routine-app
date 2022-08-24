@@ -9,11 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export const Schedule = () => {
 
-	const { events, addEvent, loadEvents } = useScheduleStore();
-
-	useEffect(() => {
-		loadEvents();
-	}, []);
+	const { events, addEvent } = useScheduleStore();
 
 	return (
 		<List

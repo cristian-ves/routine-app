@@ -6,13 +6,7 @@ import { List } from '../';
 
 export const Tasks = () => {
 
-	const { tasks, addTask, loadTasks } = useTasksStore();
-
-	useEffect(() => {
-		loadTasks();
-	}, []);
-
-
+	const { tasks, addTask } = useTasksStore();
 
 	return (
 		<List

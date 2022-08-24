@@ -24,10 +24,10 @@ export const useListItemObjective = (objective) => {
 
 	const autoSave = (objective) => {
 		if (user.uid) {
-			//Update task in backend
+			//Todo: Update task in backend
 		} else {
 			// update localStorage task
-			let storageObjectives = JSON.parse(localStorage.getItem('objectives'));
+			let storageObjectives = JSON.parse(localStorage.getItem('objectives')) || [];
 			storageObjectives = storageObjectives.map(storageObjective => (
 				(storageObjective.id == objective.id) ? objective : storageObjective
 			));

@@ -1,11 +1,24 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Route, Routes, Navigate } from "react-router";
 
-import { History, Home, Navbar, Objectives, Schedule, Settings, Tasks } from '../routine'
-import { NavbarList } from '../routine/components/NavbarList'
+import { useObjectivesStore, useRenewDay, useScheduleStore, useTasksStore } from '../hooks';
+import { History, Home, Navbar, Objectives, Schedule, Settings, Tasks, NavbarList } from '../routine'
 
 
 export const DashboardRoutes = memo(() => {
+
+	const { loadObjectives } = useObjectivesStore();
+	const { loadEvents } = useScheduleStore();
+	const { loadTasks } = useTasksStore();
+
+	useEffect(() => {
+		loadObjectives();
+		loadEvents();
+		loadTasks();
+	}, []);
+
+	useRenewDay();
+
 
 	return (
 		<header>

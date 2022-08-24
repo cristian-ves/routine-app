@@ -27,7 +27,7 @@
 
 .upper {
 	animation: rotate;
-	animation-duration: 5s;
+	animation-duration: 3s;
 	animation-iteration-count: infinite;
 	transform-origin: center;
 }

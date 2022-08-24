@@ -24,6 +24,8 @@ export const objectivesSlice = createSlice({
 		),
 
 		onLoadObjectives: (state, { payload }) => payload,
+
+
 	}
 });
 
