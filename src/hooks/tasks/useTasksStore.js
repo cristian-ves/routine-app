@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { onAddTask, onDeleteTask, onEditTask, onLoadTasks } from '../../store';
 import { useAuthStore, useUiStore } from '../';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useTasksStore = () => {
 
@@ -19,14 +20,17 @@ export const useTasksStore = () => {
 		if (user.uid) {
 			//Todo: delete task from the backend
 		} else {
-			let storageTasks = JSON.parse(localStorage.getItem('tasks'));
-			storageTasks = storageTasks.filter(storageTask => storageTask.id !== id);
-			localStorage.setItem('tasks', JSON.stringify(storageTasks));
+			const currentDay = getCurrentDay();
+			currentDay.tasks = currentDay.tasks.filter(storageTasks => storageTasks.id !== id);
+
+			updateCurrentDay(currentDay);
+
 		}
 		dispatch(onDeleteTask(id));
 	}
 
 	const addTask = () => {
+
 		let newTask;
 		if (user.uid) {
 			// Todo: Add task from the backend
@@ -36,25 +40,13 @@ export const useTasksStore = () => {
 				done: false,
 				id: new Date().getTime()
 			};
-			let storageTasks = JSON.parse(localStorage.getItem('tasks'));
-			(storageTasks === null)
-				? storageTasks = [newTask]
-				: storageTasks.push(newTask);
-			localStorage.setItem('tasks', JSON.stringify(storageTasks));
+
+			const currentDay = getCurrentDay();
+			currentDay.tasks.push(newTask);
+
+			updateCurrentDay(currentDay);
 		}
 		dispatch(onAddTask(newTask));
-	}
-
-	const loadTasks = () => {
-
-		let tasks;
-		if (user.uid) {
-			// Todo: Load tasks from backend
-		} else {
-			tasks = JSON.parse(localStorage.getItem('tasks'));
-		}
-		dispatch(onLoadTasks(tasks || []));
-
 	}
 
 
@@ -67,7 +59,6 @@ export const useTasksStore = () => {
 		editTask,
 		deleteTask,
 		addTask,
-		loadTasks,
 
 	}
 

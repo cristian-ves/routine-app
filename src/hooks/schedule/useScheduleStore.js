@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { onAddEvent, onDeleteEvent, onEditEvent, onLoadEvents } from '../../store';
 import { useAuthStore, useUiStore } from '../';
-import { getCurrentDay, updateEventsCurrentDay } from '../../helpers';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useScheduleStore = () => {
 
@@ -23,7 +23,7 @@ export const useScheduleStore = () => {
 			const currentDay = getCurrentDay();
 			currentDay.events = currentDay.events.filter(storageEvent => storageEvent.id !== id);
 
-			updateEventsCurrentDay(currentDay);
+			updateCurrentDay(currentDay);
 		}
 		dispatch(onDeleteEvent(id));
 	}
@@ -32,8 +32,6 @@ export const useScheduleStore = () => {
 
 		let newEvent;
 		if (user.uid) {
-			showMessage('schedule');
-			clearMessage();
 			// Todo: Add event from the backend
 		} else {
 			const id = new Date().getTime();
@@ -45,7 +43,7 @@ export const useScheduleStore = () => {
 			const currentDay = getCurrentDay();
 			currentDay.events.push(newEvent);
 
-			updateEventsCurrentDay(currentDay);
+			updateCurrentDay(currentDay);
 
 		}
 

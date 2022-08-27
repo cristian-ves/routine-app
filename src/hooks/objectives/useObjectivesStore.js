@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { onAddObjective, onDeleteObjective, onEditObjective, onLoadObjectives } from '../../store';
 import { useAuthStore, useUiStore } from '../';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useObjectivesStore = () => {
 
@@ -20,9 +21,11 @@ export const useObjectivesStore = () => {
 		if (user.uid) {
 			//Todo: delete objective from the backend
 		} else {
-			let storageObjectives = JSON.parse(localStorage.getItem('objectives'));
-			storageObjectives = storageObjectives.filter(storageObjective => storageObjective.id !== id);
-			localStorage.setItem('objectives', JSON.stringify(storageObjectives));
+			const currentDay = getCurrentDay();
+			currentDay.objectives = currentDay.objectives.
+				filter(storageObjective => storageObjective.id !== id);
+
+			updateCurrentDay(currentDay);
 		}
 		dispatch(onDeleteObjective(id));
 	}
@@ -32,16 +35,17 @@ export const useObjectivesStore = () => {
 		if (user.uid) {
 			// Todo: Add objective from the backend
 		} else {
+
 			newObjective = {
 				name: '',
 				progress: 50,
 				id: new Date().getTime()
 			};
-			let storageObjectives = JSON.parse(localStorage.getItem('objectives'));
-			(storageObjectives === null)
-				? storageObjectives = [newObjective]
-				: storageObjectives.push(newObjective);
-			localStorage.setItem('objectives', JSON.stringify(storageObjectives));
+			const currentDay = getCurrentDay();
+			currentDay.objectives.push(newObjective);
+
+			updateCurrentDay(currentDay);
+
 		}
 		dispatch(onAddObjective(newObjective));
 	}

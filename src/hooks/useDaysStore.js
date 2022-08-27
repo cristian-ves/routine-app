@@ -1,5 +1,4 @@
-import { isEqual, parseISO, startOfToday } from 'date-fns';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { onLoadDays, onLoadEvents, onLoadObjectives, onLoadTasks } from '../store';
 import { useAuthStore } from './useAuthStore';
@@ -9,15 +8,14 @@ export const useDaysStore = () => {
 
 	const dispatch = useDispatch();
 
-	const { objectives, tasks, events, days } = useSelector(state => state);
 	const { user } = useAuthStore();
 
-	const loadDays = () => {
+	const loadAll = () => {
 		if (user.uid) { //Todo: load from backend
 
 		} else {
 			const days = JSON.parse(localStorage.getItem('days')) || [];
-			dispatch(onLoadDays(days));
+			loadDays(days);
 		}
 
 		const currentDay = getCurrentDay();
@@ -28,7 +26,13 @@ export const useDaysStore = () => {
 
 	}
 
+	const loadDays = (days) => {
+		dispatch(onLoadDays(days));
+	}
+
+
 	return {
+		loadAll,
 		loadDays
 	}
 }

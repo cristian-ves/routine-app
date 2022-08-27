@@ -1,4 +1,5 @@
 import { useTasksStore, useAuthStore } from '..';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useListItemTask = (task) => {
 
@@ -27,11 +28,14 @@ export const useListItemTask = (task) => {
 			//Save task in backend
 		} else {
 			// update localStorage task
-			let storageTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-			storageTasks = storageTasks.map(storageTask => (
-				(storageTask.id == task.id) ? task : storageTask
+
+			let currentDay = getCurrentDay();
+			const tasks = currentDay.tasks.map(storageTask => (
+				(task.id === storageTask.id) ? task : storageTask
 			));
-			localStorage.setItem('tasks', JSON.stringify(storageTasks));
+
+			currentDay.tasks = tasks;
+			updateCurrentDay(currentDay);
 		}
 	}
 

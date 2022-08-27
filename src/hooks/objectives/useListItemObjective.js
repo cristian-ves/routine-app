@@ -1,4 +1,5 @@
 import { useObjectivesStore, useAuthStore } from '..';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useListItemObjective = (objective) => {
 
@@ -27,11 +28,15 @@ export const useListItemObjective = (objective) => {
 			//Todo: Update task in backend
 		} else {
 			// update localStorage task
-			let storageObjectives = JSON.parse(localStorage.getItem('objectives')) || [];
-			storageObjectives = storageObjectives.map(storageObjective => (
-				(storageObjective.id == objective.id) ? objective : storageObjective
+
+			let currentDay = getCurrentDay();
+			const objectives = currentDay.objectives.map(storageObjective => (
+				(objective.id === storageObjective.id) ? objective : storageObjective
 			));
-			localStorage.setItem('objectives', JSON.stringify(storageObjectives));
+
+			currentDay.objectives = objectives;
+
+			updateCurrentDay(currentDay);
 		}
 	}
 

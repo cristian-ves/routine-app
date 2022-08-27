@@ -1,4 +1,5 @@
 import { isEqual, parseISO, startOfToday } from 'date-fns';
+import { onLoadDays } from '../store';
 
 export const getCurrentDay = () => {
 
@@ -28,7 +29,7 @@ export const getCurrentDay = () => {
 	return currentDay;
 }
 
-export const updateEventsCurrentDay = (newCurrentDay) => {
+export const updateCurrentDay = (newCurrentDay) => {
 
 	let days = JSON.parse(localStorage.getItem('days')) || [];
 

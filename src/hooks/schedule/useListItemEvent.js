@@ -1,5 +1,5 @@
 import { useScheduleStore, useAuthStore } from '..';
-import { getCurrentDay, updateEventsCurrentDay } from '../../helpers';
+import { getCurrentDay, updateCurrentDay } from '../../helpers';
 
 export const useListItemEvent = (event) => {
 
@@ -35,7 +35,7 @@ export const useListItemEvent = (event) => {
 
 			currentDay.events = events;
 
-			updateEventsCurrentDay(currentDay);
+			updateCurrentDay(currentDay);
 		}
 	}
 
