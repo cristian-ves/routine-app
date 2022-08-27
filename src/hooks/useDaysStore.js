@@ -3,22 +3,24 @@ import { useDispatch } from 'react-redux';
 import { onLoadDays, onLoadEvents, onLoadObjectives, onLoadTasks } from '../store';
 import { useAuthStore } from './useAuthStore';
 import { getCurrentDay } from '../helpers';
+import { differenceInMilliseconds, startOfTomorrow } from 'date-fns';
 
 export const useDaysStore = () => {
 
 	const dispatch = useDispatch();
-
 	const { user } = useAuthStore();
 
 	const loadAll = () => {
+
+		startCronometerForTomorrow();
+
+		let currentDay;
+
 		if (user.uid) { //Todo: load from backend
 
 		} else {
-			const days = JSON.parse(localStorage.getItem('days')) || [];
-			loadDays(days);
+			currentDay = getCurrentDay();
 		}
-
-		const currentDay = getCurrentDay();
 
 		dispatch(onLoadEvents(currentDay.events));
 		dispatch(onLoadObjectives(currentDay.objectives));
@@ -26,13 +28,31 @@ export const useDaysStore = () => {
 
 	}
 
-	const loadDays = (days) => {
-		dispatch(onLoadDays(days));
+	const loadDays = (setIsLoading) => {
+		if (user.uid) { //Todo: load from backend
+
+		} else {
+			const days = JSON.parse(localStorage.getItem('days')) || [];
+			dispatch(onLoadDays(days));
+		}
+		setIsLoading(false); // finish loading
 	}
 
 
+	const startCronometerForTomorrow = () => {
+
+		const timeToStartRenewDayMS = differenceInMilliseconds(startOfTomorrow(), new Date());
+
+		console.log(timeToStartRenewDayMS / 1000 + 's')
+
+		setTimeout(() => { // A timeout that runs at 12:00 am to change the day
+			loadAll();
+		}, timeToStartRenewDayMS);
+	}
+
 	return {
 		loadAll,
-		loadDays
+		loadDays,
+		startCronometerForTomorrow
 	}
 }

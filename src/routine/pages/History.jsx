@@ -1,32 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { getDay, getHours, getMinutes, hoursToMilliseconds, isBefore, sub } from 'date-fns';
+import { useSelector } from 'react-redux'
+import { parseISO } from 'date-fns';
 
 import SpinnerStyles from '../../styles/components/Spinner.module.css';
 
 import { HistoryBox } from '../';
-import { Spinner } from '../../auth';
-import { onLoadDays } from '../../store';
-import { isAfter } from 'date-fns/esm';
+import { useDaysStore } from '../../hooks';
 
 export const History = () => {
 
-	const dispatch = useDispatch();
-	const { history } = useSelector(state => state.days);
+	const { days } = useSelector(state => state.days);
+	const { loadDays } = useDaysStore();
 
 	const [isLoading, setIsLoading] = useState(true);
 
-	const loadDays = () => {
-		//Todo: load from backend and from storage
-	}
-
 	useEffect(() => {
-		//Todo: load all days from backendo or local storage
-		setIsLoading(false);
+		loadDays(setIsLoading);
 
+	}, [])
 
-
-	}, []);
 
 	if (isLoading) return (
 		<div>
@@ -39,11 +31,9 @@ export const History = () => {
 		<>
 			<h1>History</h1>
 			{
-				history
-					.filter(({ data }) => (data.tasks.length > 0 || data.objectives.length > 0 || data.eventslength > 0))
-					.map(({ data, date }, i) => {
-
-						const { tasks, objectives } = data;
+				days
+					.filter(day => (day.tasks.length > 0 || day.objectives.length > 0 || day.events.length > 0))
+					.map(({ tasks, objectives, date }, i) => {
 
 						const tasksDone = tasks.filter(task => task.done).length;
 
@@ -56,7 +46,7 @@ export const History = () => {
 						return (
 							<HistoryBox
 								avrgProgress={avrgProgress || 0}
-								date={date}
+								date={parseISO(date)}
 								tasksDone={tasksDone}
 								totalTasks={tasks.length}
 								key={i}
