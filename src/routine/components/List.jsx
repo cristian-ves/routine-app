@@ -11,18 +11,18 @@ export const List = ({ children, list, title, handleAddItem, hook, componentName
 			<ul>
 
 				{
-					list?.map((event, i) => {
+					list?.map((event, i) => (
 
-						return (
-							<ListItem
-								event={event}
-								key={i}
-								useList={hook}
-							>
-								{children}
-							</ListItem>
-						)
-					})
+						<ListItem
+							event={event}
+							key={i}
+							useList={hook}
+						>
+							{children}
+						</ListItem>
+
+					)
+					)
 				}
 
 			</ul>

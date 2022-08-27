@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { onAddEvent, onDeleteEvent, onEditEvent, onLoadEvents } from '../../store';
 import { useAuthStore, useUiStore } from '../';
+import { getCurrentDay, updateEventsCurrentDay } from '../../helpers';
 
 export const useScheduleStore = () => {
 
@@ -8,7 +9,7 @@ export const useScheduleStore = () => {
 
 	const events = useSelector(state => state.events);
 	const { user } = useAuthStore();
-	const { showMessage } = useUiStore();
+	const { showMessage, clearMessage } = useUiStore();
 
 	const editEvent = event => { //only in the state, the backend or local storage will the autoSave function do it in useListItemTask.js
 		showMessage('schedule');
@@ -19,16 +20,20 @@ export const useScheduleStore = () => {
 		if (user.uid) {
 			//Todo: delete event from the backend
 		} else {
-			let storageEvents = JSON.parse(localStorage.getItem('events'));
-			storageEvents = storageEvents.filter(storageEvent => storageEvent.id !== id);
-			localStorage.setItem('events', JSON.stringify(storageEvents));
+			const currentDay = getCurrentDay();
+			currentDay.events = currentDay.events.filter(storageEvent => storageEvent.id !== id);
+
+			updateEventsCurrentDay(currentDay);
 		}
 		dispatch(onDeleteEvent(id));
 	}
 
 	const addEvent = () => {
+
 		let newEvent;
 		if (user.uid) {
+			showMessage('schedule');
+			clearMessage();
 			// Todo: Add event from the backend
 		} else {
 			const id = new Date().getTime();
@@ -37,25 +42,14 @@ export const useScheduleStore = () => {
 				time: id,
 				id
 			};
-			let storageEvents = JSON.parse(localStorage.getItem('events'));
-			(storageEvents === null)
-				? storageEvents = [newEvent]
-				: storageEvents.push(newEvent);
-			localStorage.setItem('events', JSON.stringify(storageEvents));
+			const currentDay = getCurrentDay();
+			currentDay.events.push(newEvent);
+
+			updateEventsCurrentDay(currentDay);
+
 		}
+
 		dispatch(onAddEvent(newEvent));
-	}
-
-	const loadEvents = () => {
-
-		let events;
-		if (user.uid) {
-			// Todo: Load events from backend
-		} else {
-			events = JSON.parse(localStorage.getItem('events'));
-		}
-		dispatch(onLoadEvents(events || []));
-
 	}
 
 
@@ -67,8 +61,7 @@ export const useScheduleStore = () => {
 		//*methods
 		editEvent,
 		deleteEvent,
-		addEvent,
-		loadEvents,
+		addEvent
 
 	}
 

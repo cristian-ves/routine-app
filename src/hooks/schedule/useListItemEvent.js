@@ -1,4 +1,5 @@
 import { useScheduleStore, useAuthStore } from '..';
+import { getCurrentDay, updateEventsCurrentDay } from '../../helpers';
 
 export const useListItemEvent = (event) => {
 
@@ -24,14 +25,17 @@ export const useListItemEvent = (event) => {
 
 	const autoSave = (event) => {
 		if (user.uid) {
-			//Update task in backend
+			//Update task in backendanima
 		} else {
 			// update localStorage task
-			let storageEvents = JSON.parse(localStorage.getItem('events')) || [];
-			storageEvents = storageEvents.map(storageEvent => (
-				(storageEvent.id == event.id) ? event : storageEvent
+			let currentDay = getCurrentDay();
+			const events = currentDay.events.map(storageEvent => (
+				(event.id === storageEvent.id) ? event : storageEvent
 			));
-			localStorage.setItem('events', JSON.stringify(storageEvents));
+
+			currentDay.events = events;
+
+			updateEventsCurrentDay(currentDay);
 		}
 	}
 

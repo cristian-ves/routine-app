@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const daysSlice = createSlice({
 	name: 'days',
 	initialState: {
-		history: [
+		days: [
 		],
 		startOfTomorrow: null,
 		currentId: null,
@@ -11,7 +11,7 @@ export const daysSlice = createSlice({
 	},
 	reducers: {
 		onLoadDays: (state, { payload = [] }) => {
-			state.history = payload;
+			state.days = payload;
 		},
 		onAddDay: (state, { payload }) => {
 			state.history.push(payload)
