@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import validator from 'validator';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 import { useAuthStore, useFormWithErrors } from '../../hooks';
-import { TextBox } from '../';
+import { TextBox, PasswordBox } from '..';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
-export const SigninPage = () => {
+export const RegisterPage = () => {
 
 	const dispatch = useDispatch();
 	const { startRegisterWithEmailPasswordName } = useAuthStore();
@@ -25,13 +25,18 @@ export const SigninPage = () => {
 		} else if (!validator.isEmail(email)) {
 			onAddError('email', 'You must enter a valid email');
 			return false;
-		} else if (password !== password2) {
-			onAddError('password2', ' ');
-			onAddError('password', 'Passwords must be the same');
-			return false;
-		} else if (password.length < 5) {
+		} else if (password.length < 5 && password2.length < 5) {
 			onAddError('password2', ' ');
 			onAddError('password', 'Passwords must be longer than 5 characters');
+			return false;
+		} else if (password.length < 5) {
+			onAddError('password', 'Passwords must be longer than 5 characters');
+			return false;
+		} else if (password2.length < 5) {
+			onAddError('password2', 'Passwords must be longer than 5 characters');
+			return false;
+		} else if (password !== password2) {
+			Swal.fire('Password validation', 'Passwords must be the same', 'error');
 			return false;
 		}
 
@@ -47,7 +52,7 @@ export const SigninPage = () => {
 
 	return (
 		<>
-			<h3>Sign in</h3>
+			<h3>Register</h3>
 			<form onSubmit={handleSubmit}>
 				<TextBox
 					handleInputChange={onInputChange}
@@ -65,32 +70,26 @@ export const SigninPage = () => {
 					value={email}
 					errorMessage={errors.email}
 				/>
-				<TextBox
+				<PasswordBox
 					errorMessage={errors.password}
 					handleInputChange={onInputChange}
-					inputtype='password'
 					labelText='Password'
 					name='password'
-					required
-					type='password'
 					value={password}
 				/>
-				<TextBox
+				<PasswordBox
 					errorMessage={errors.password2}
 					handleInputChange={onInputChange}
-					labelText='Repeat password'
+					labelText='Confirm password'
 					name='password2'
-					type='password'
 					value={password2}
 				/>
 				<div>
 					<input type="checkbox" name="keepLogin" id="keepLogin" />
 					<label htmlFor="keepLogin">Keep me logged in</label>
-
-					{/* <p>Forgot your password?</p>  Todo: Forgot password sistem*/}
 				</div>
 				<button>
-					Sign in
+					Register
 				</button>
 			</form>
 			<div>

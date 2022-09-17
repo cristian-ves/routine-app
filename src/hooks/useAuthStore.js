@@ -1,12 +1,12 @@
 
 import { useDispatch, useSelector } from 'react-redux'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import Swal from 'sweetalert2';
 
 import { auth } from '../firebase/firebase-config';
 import { onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
-
 
 	const { status, user, errorMessage } = useSelector(state => state.auth)
 	const dispatch = useDispatch();
@@ -63,26 +63,49 @@ export const useAuthStore = () => {
 	const startRegisterWithEmailPasswordName = (email, password, name) => {
 		return (dispatch) => {
 
+			dispatch(onChecking());
+
 			createUserWithEmailAndPassword(auth, email, password)
 				.then(async (userCredential) => {
 					const user = userCredential.user;
-
 
 					await updateProfile(user, {
 						displayName: name
 					})
 
-					//TODO: Login the user created
+					dispatch(onLogin({
+						name,
+						uid: user.uid
+					}))
 
 				})
 				.catch(e => {
-					console.log('Error al crear cuenta');
-					//TODO: Create or import a popup message
-					// Swal.fire('Error', e.message, 'error');
+					Swal.fire('Error creating account', 'Try with other data', 'error');
 				});
 
 		}
 
+	}
+
+	const startLoginWithEmailPassword = (email, password) => {
+		return (dispatch) => {
+
+			dispatch(onChecking());
+
+			signInWithEmailAndPassword(auth, email, password)
+				.then(({ user }) => {
+					// Signed in
+					dispatch(onLogin({
+						name: user.displayName,
+						uid: user.uid
+					}))
+					// ...
+				})
+				.catch(e => {
+					Swal.fire('Error logging in', 'The password or the email must be wrong', 'error');
+
+				});
+		}
 	}
 
 	const startLogout = () => {
@@ -101,8 +124,9 @@ export const useAuthStore = () => {
 		checkUserExistence,
 		loginWithoutAcc,
 		startLogin,
+		startLoginWithEmailPassword,
 		startLogout,
-		startRegisterWithEmailPasswordName
+		startRegisterWithEmailPasswordName,
 	}
 
 }

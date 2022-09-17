@@ -30,7 +30,7 @@ export const WithoutAccountPage = () => {
 			<h3>Continue without account</h3>
 			<div>
 				<i className="fa-solid fa-circle-info"></i>
-				<p>All your data will be saved only on this device, if you want to keep it, please sign in.</p>
+				<p>All your data will be saved only on this device, if you want to keep it, please register.</p>
 			</div>
 			<form onSubmit={handleSubmit}>
 				<TextBox
@@ -45,7 +45,7 @@ export const WithoutAccountPage = () => {
 			<div>
 				<Link to='/auth/login'>Log in</Link>
 				&ensp;-&ensp;
-				<Link to='/auth/signin'>Sign in</Link>
+				<Link to='/auth/register'>Register</Link>
 			</div>
 		</>
 	)

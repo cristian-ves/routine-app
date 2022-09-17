@@ -1,19 +1,35 @@
+import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
+import validator from 'validator';
 
-import { TextBox } from '../';
-import { useForm } from '../../hooks';
+import { TextBox, PasswordBox } from '../';
+import { useAuthStore, useFormWithErrors } from '../../hooks';
 
 export const LoginPage = () => {
 
-	const [values, onInputChange] = useForm({
-		email: '',
-		password: ''
+	const dispatch = useDispatch();
+	const { startLoginWithEmailPassword } = useAuthStore();
+	const { formValues, onInputChange, errors, onAddError } = useFormWithErrors({
+		email: '', password: ''
 	});
-	const { email, password } = values;
+	const { email, password } = formValues;
 
+
+	const isFormValid = () => {
+
+		if (!validator.isEmail(email)) {
+			onAddError('email', 'You must enter a valid email');
+			return false;
+		}
+
+		return true;
+	}
 
 	const handleSubmit = (e) => {
-		e.preventDefault()
+		e.preventDefault();
+
+		if (isFormValid())
+			dispatch(startLoginWithEmailPassword(email, password));
 	}
 
 	return (
@@ -22,14 +38,14 @@ export const LoginPage = () => {
 			<form onSubmit={handleSubmit}>
 				<TextBox
 					handleInputChange={onInputChange}
-					inputType='email'
 					labelText='Email'
 					name='email'
+					required
 					value={email}
+					errorMessage={errors.email}
 				/>
-				<TextBox
+				<PasswordBox
 					handleInputChange={onInputChange}
-					inputType='password'
 					labelText='Password'
 					name='password'
 					value={password}
@@ -39,16 +55,16 @@ export const LoginPage = () => {
 					<input type="checkbox" name="keepLogin" id="keepLogin" />
 					<label htmlFor="keepLogin">Keep me logged in</label>
 
-					{/* <p>Forgot your password?</p>  Todo: Forgot password sistem*/}
+					{/* <p>Forgot your password?</p>  TODO: Forgot password sistem*/}
 				</div>
 				<button>
 					Log in
 				</button>
 			</form>
 			<div>
-				<span>Havent sign in yet?</span>
+				<span>Not registered yet?</span>
 				&ensp;
-				<Link to="/auth/signin">Sign in</Link>
+				<Link to="/auth/register">Register</Link>
 			</div>
 			<Link to='/auth/guest'>Enter without account </Link>
 		</>
