@@ -9,5 +9,6 @@ export * from './useAuthStore';
 export * from './useAutoSave';
 export * from './useDaysStore';
 export * from './useForm';
+export * from './useFormWithErrors';
 export * from './useRenewDay';
 export * from './useUiStore';

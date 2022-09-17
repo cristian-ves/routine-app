@@ -79,20 +79,6 @@ export const useRenewDay = () => {
 		}, timeToStartRenewDayMS);
 	}, []);
 
-	/* useEffect(() => {
-
-		console.log(days.history.length, areDaysLoad)
-		if (days.history.length > 0 && areDaysLoad) {
-			setareDaysLoad(false);
-			saveDay(state);
-			console.log('saving on load', areDaysLoad)
-		}
-		// if (days.history.length > 0 && areDaysLoad) {
-		// 	setareDaysLoad(false);
-		// }
-
-	}, [days.history]) */
-
 
 	const renewDay = (currentDate, tomorrowDate) => {
 		if (

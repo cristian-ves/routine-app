@@ -1,6 +1,9 @@
 
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+
+import { auth } from '../firebase/firebase-config';
+import { onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
 
@@ -56,29 +59,29 @@ export const useAuthStore = () => {
 		} */
 	}
 
-	const register = async ({ name, email, password }) => {
 
-		/* dispatch(onChecking())
+	const startRegisterWithEmailPasswordName = (email, password, name) => {
+		return (dispatch) => {
 
-		try {
-			const { data } = await calendarApi.post('/auth/register', { name, email, password });
-			localStorage.setItem('token', data.token);
-			localStorage.setItem('token-init-date', new Date().getTime());
+			createUserWithEmailAndPassword(auth, email, password)
+				.then(async (userCredential) => {
+					const user = userCredential.user;
 
-			dispatch(onLogin({
-				name: data.name,
-				uid: data.uid
-			}))
 
-		} catch (error) {
+					await updateProfile(user, {
+						displayName: name
+					})
 
-			dispatch(onLogout(Object.values(error.response.data?.errors)[0].msg || 'Registry error'));
-			setTimeout(() => {
-				dispatch(clearErrorMessage())
-			}, 100);
+					//TODO: Login the user created
 
-		} */
+				})
+				.catch(e => {
+					console.log('Error al crear cuenta');
+					//TODO: Create or import a popup message
+					// Swal.fire('Error', e.message, 'error');
+				});
 
+		}
 
 	}
 
@@ -97,9 +100,9 @@ export const useAuthStore = () => {
 		//* Methods
 		checkUserExistence,
 		loginWithoutAcc,
-		register,
 		startLogin,
 		startLogout,
+		startRegisterWithEmailPasswordName
 	}
 
 }

@@ -38,7 +38,6 @@ export const WithoutAccountPage = () => {
 					labelText='Name'
 					value={name}
 					handleInputChange={handleInputChange}
-					errorMessage={errorMessage}
 					resetValue={reset}
 				/>
 				<button>Enter</button>

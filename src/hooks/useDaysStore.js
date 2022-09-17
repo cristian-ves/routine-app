@@ -43,8 +43,6 @@ export const useDaysStore = () => {
 
 		const timeToStartRenewDayMS = differenceInMilliseconds(startOfTomorrow(), new Date());
 
-		console.log(timeToStartRenewDayMS / 1000 + 's')
-
 		setTimeout(() => { // A timeout that runs at 12:00 am to change the day
 			loadAll();
 		}, timeToStartRenewDayMS);

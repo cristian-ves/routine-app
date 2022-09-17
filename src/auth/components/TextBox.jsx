@@ -1,12 +1,11 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Styles from '../../styles/components/TextBox.module.css';
 
 export const TextBox = ({
-	id, // name attribute of the input
 	handleInputChange, // function to do when input change
 	labelText,
-	errorMessage,
+	errorMessage = '',
 	resetValue, // function to clear the input value
 	...inputProps
 }) => {
@@ -15,11 +14,12 @@ export const TextBox = ({
 
 	const input = useRef(null);
 
+	const id = useId();
+
 	useEffect(() => {
 
 		if (errorMessage != '') {
 			setContainerClass(Styles.container + ' ' + Styles.error);
-			resetValue();
 			input.current.focus();
 		} else {
 			setContainerClass(Styles.container);
@@ -27,11 +27,12 @@ export const TextBox = ({
 
 	}, [errorMessage])
 
+
 	return (
 		<div className={containerClass}>
 			<div className={Styles.group}>
 				<input
-					id={id || input.current.name}
+					id={id}
 					autoComplete="off"
 					className={Styles.input}
 					onChange={handleInputChange}
@@ -40,7 +41,7 @@ export const TextBox = ({
 					ref={input}
 					{...inputProps}
 				/>
-				<label htmlFor={id || input.current.name} className={Styles.info}>{labelText || input.current.name}:</label>
+				<label htmlFor={id} className={Styles.info}>{labelText || input.current.name}:</label>
 			</div>
 			<p className={Styles['error-message']}>{errorMessage}</p>
 		</div>
