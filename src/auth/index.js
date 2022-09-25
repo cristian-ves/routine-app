@@ -8,3 +8,4 @@ export * from './pages/WithoutAccountPage';
 export * from './components/PasswordBox';
 export * from './components/Spinner';
 export * from './components/TextBox';
+export * from './components/GoogleButton';

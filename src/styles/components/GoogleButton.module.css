@@ -1,0 +1,35 @@
+.button {
+  align-items: center;
+  border: 1px solid var(--gray);
+  border-radius: 0.7rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  color: gray;
+  cursor: pointer;
+  display: flex;
+  gap:1rem;
+  justify-content: center;
+  margin: 0.5rem;
+  padding: 0.7rem;
+ }
+
+.image {
+  width: 100%;
+}
+
+.imageContainer{
+  display: flex;
+  width: 1.5rem;
+}
+
+.signUpButton {
+  background-color: var(--googleBlue);
+  border: none;
+  color: var(--white);
+  gap: 0.5rem;
+}
+
+.signUpButton .imageContainer {
+  background-color: var(--white);
+  border-radius: 50%;
+  padding: 0.3rem;
+}

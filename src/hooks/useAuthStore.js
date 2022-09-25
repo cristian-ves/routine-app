@@ -8,7 +8,7 @@ import { onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
 
-	const { status, user, errorMessage } = useSelector(state => state.auth)
+	const { status, user} = useSelector(state => state.auth)
 	const dispatch = useDispatch();
 
 	const loginWithoutAcc = ({ name }) => {
@@ -39,24 +39,6 @@ export const useAuthStore = () => {
 
 	const startLogin = async ({ email, password }) => {
 
-		/* dispatch(onChecking());
-
-		try {
-			const { data } = await calendarApi.post('/auth', { email, password });
-			localStorage.setItem('token', data.token);
-			localStorage.setItem('token-init-date', new Date().getTime());
-
-			dispatch(onLogin({
-				name: data.name,
-				uid: data.uid
-			}));
-
-		} catch (error) {
-			dispatch(onLogout('Wrong credentials'));
-			setTimeout(() => {
-				dispatch(clearErrorMessage())
-			}, 100);
-		} */
 	}
 
 
@@ -81,6 +63,7 @@ export const useAuthStore = () => {
 				})
 				.catch(e => {
 					Swal.fire('Error creating account', 'Try with other data', 'error');
+					dispatch(onLogout());
 				});
 
 		}
@@ -103,7 +86,7 @@ export const useAuthStore = () => {
 				})
 				.catch(e => {
 					Swal.fire('Error logging in', 'The password or the email must be wrong', 'error');
-
+					dispatch(onLogout());
 				});
 		}
 	}
@@ -116,7 +99,6 @@ export const useAuthStore = () => {
 
 	return {
 		//* Properties
-		errorMessage,
 		status,
 		user,
 

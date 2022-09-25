@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import validator from 'validator';
 
 import { useAuthStore, useFormWithErrors } from '../../hooks';
-import { TextBox, PasswordBox } from '..';
+import { TextBox, PasswordBox, GoogleButton } from '..';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -50,6 +50,10 @@ export const RegisterPage = () => {
 			dispatch(startRegisterWithEmailPasswordName(email, password, name));
 	}
 
+	const signUpWithGoogle = () => {
+		console.log('signing up...')
+	}
+
 	return (
 		<>
 			<h3>Register</h3>
@@ -58,7 +62,6 @@ export const RegisterPage = () => {
 					handleInputChange={onInputChange}
 					labelText='Name'
 					name='name'
-					required
 					value={name}
 					errorMessage={errors.name}
 				/>
@@ -91,6 +94,13 @@ export const RegisterPage = () => {
 				<button>
 					Register
 				</button>
+
+				<GoogleButton
+					width="20rem"
+					type="sign-up"
+					onClick={signUpWithGoogle}
+				/>
+
 			</form>
 			<div>
 				<span>Already have an account?</span>

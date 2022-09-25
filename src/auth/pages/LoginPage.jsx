@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import validator from 'validator';
 
-import { TextBox, PasswordBox } from '../';
+import { TextBox, PasswordBox, GoogleButton } from '../';
 import { useAuthStore, useFormWithErrors } from '../../hooks';
 
 export const LoginPage = () => {
@@ -60,6 +60,9 @@ export const LoginPage = () => {
 				<button>
 					Log in
 				</button>
+				<GoogleButton
+					width="20rem"
+				/>
 			</form>
 			<div>
 				<span>Not registered yet?</span>
