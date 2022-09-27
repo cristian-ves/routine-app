@@ -8,7 +8,7 @@ import { useAuthStore, useFormWithErrors } from '../../hooks';
 export const LoginPage = () => {
 
 	const dispatch = useDispatch();
-	const { startLoginWithEmailPassword } = useAuthStore();
+	const { startLoginWithEmailPassword, startLoginWithGoogle } = useAuthStore();
 	const { formValues, onInputChange, errors, onAddError } = useFormWithErrors({
 		email: '', password: ''
 	});
@@ -30,6 +30,10 @@ export const LoginPage = () => {
 
 		if (isFormValid())
 			dispatch(startLoginWithEmailPassword(email, password));
+	}
+
+	const signInWithGoogle = () => {
+		dispatch(startLoginWithGoogle());
 	}
 
 	return (
@@ -62,6 +66,7 @@ export const LoginPage = () => {
 				</button>
 				<GoogleButton
 					width="20rem"
+					onClick={signInWithGoogle}
 				/>
 			</form>
 			<div>

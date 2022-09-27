@@ -1,9 +1,9 @@
 
 import { useDispatch, useSelector } from 'react-redux'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import Swal from 'sweetalert2';
 
-import { auth } from '../firebase/firebase-config';
+import { auth, provider } from '../firebase/firebase-config';
 import { onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
@@ -25,7 +25,7 @@ export const useAuthStore = () => {
 
 	}
 
-	const checkUserExistence = () => {
+	const checkUserExistence = () => { // check if a user exists in the localStorage, works for withoutAcc
 
 		const user = JSON.parse(localStorage.getItem('user'));
 
@@ -34,10 +34,6 @@ export const useAuthStore = () => {
 		}
 
 		dispatch(onLogout());
-
-	}
-
-	const startLogin = async ({ email, password }) => {
 
 	}
 
@@ -91,6 +87,31 @@ export const useAuthStore = () => {
 		}
 	}
 
+	const startLoginWithGoogle = () => {
+		return (dispatch) => {
+
+			signInWithPopup(auth, provider)
+				.then (result => {
+					// This gives you a Google Access Token. You can use it to access the Google API.
+			    const credential = GoogleAuthProvider.credentialFromResult(result);
+			    const token = credential.accessToken;
+			    // The signed-in user info.
+			    const user = result.user;
+
+					dispatch(onLogin({
+						name: user.displayName,
+						uid: user.uid
+					}))
+
+			    // ...
+				}).catch(error => {
+					Swal.fire('Error signing up', 'There was a problem, please try again', 'error');
+					dispatch(onLogout());
+				})
+
+		}
+	}
+
 	const startLogout = () => {
 		localStorage.clear();
 		dispatch(onLogoutCalendar());
@@ -105,10 +126,25 @@ export const useAuthStore = () => {
 		//* Methods
 		checkUserExistence,
 		loginWithoutAcc,
-		startLogin,
 		startLoginWithEmailPassword,
 		startLogout,
 		startRegisterWithEmailPasswordName,
+		startLoginWithGoogle
 	}
 
 }
+
+//onAuthStateChanged(auth, (user) => {
+//   if(user) {
+//
+//     dispatch(onLogin({
+//       name: user.displayName,
+//       uid: user.uid
+//     }))
+//
+//   } else {
+//
+//      dispatch(onLogout());
+//
+//   }
+// })

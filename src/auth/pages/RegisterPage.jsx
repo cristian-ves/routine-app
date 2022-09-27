@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 export const RegisterPage = () => {
 
 	const dispatch = useDispatch();
-	const { startRegisterWithEmailPasswordName } = useAuthStore();
+	const { startRegisterWithEmailPasswordName, startLoginWithGoogle } = useAuthStore();
 	const { formValues, onInputChange, resetValue, errors, onAddError } = useFormWithErrors({
 		name: '', email: '', password: '', password2: ''
 	});
@@ -51,7 +51,7 @@ export const RegisterPage = () => {
 	}
 
 	const signUpWithGoogle = () => {
-		console.log('signing up...')
+		dispatch(startLoginWithGoogle());
 	}
 
 	return (
