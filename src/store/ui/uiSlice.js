@@ -4,22 +4,20 @@ export const uiSlice = createSlice({
 	name: 'ui',
 	initialState: {
 		saving: {
-			msg: '',
-			componentName: null
+			msg: 'Saving...',
+			schedule: false,
+			tasks: false,
+			objectives: false
 		}
 	},
 	reducers: {
-		onClearSaving: (state) => {
-			state.saving = {
-				msg: '',
-				componentName: null
-			};
+		onClearSaving: (state, { payload }) => {
+			if (state.saving.hasOwnProperty(payload))
+				state.saving[payload] = false
 		},
 		onShowSaving: (state, { payload }) => {
-			state.saving = {
-				msg: 'Saving...',
-				componentName: payload
-			}
+			if (state.saving.hasOwnProperty(payload))
+				state.saving[payload] = true
 		}
 	}
 });

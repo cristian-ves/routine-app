@@ -6,7 +6,9 @@ export const SavingSpinner = ({ componentName }) => {
 
 	const { saving } = useUiStore();
 
-	return (saving.componentName === componentName)
+	!saving.hasOwnProperty(componentName) && <></>
+
+	return (saving[componentName])
 		? (
 			<div style={{ animationDuration: '3s' }}>
 				<i className={`fa-solid fa-rotate ${Styles.upper}`} ></i>&ensp;

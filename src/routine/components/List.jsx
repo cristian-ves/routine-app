@@ -1,7 +1,14 @@
 
 import { ListItem, SavingSpinner } from '..';
 
-export const List = ({ children, list, title, handleAddItem, hook, componentName }) => {
+export const List = ({
+	children,
+	list,
+	title,
+	handleAddItem,
+	hook,
+	componentName
+}) => {
 	return (
 		<>
 			<div>
@@ -17,6 +24,7 @@ export const List = ({ children, list, title, handleAddItem, hook, componentName
 							event={event}
 							key={i}
 							useList={hook}
+							componentName={componentName}
 						>
 							{children}
 						</ListItem>

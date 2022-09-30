@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { onClearSaving, onShowSaving } from '../store';
 
@@ -6,15 +6,14 @@ export const useUiStore = () => {
 
 	const dispatch = useDispatch();
 
-	const ui = useSelector(state => state.ui);
-	const { saving } = ui;
+	const { saving } = useSelector(state => state.ui);
 
 	const showMessage = useCallback(componentName => {
-		dispatch(onShowSaving(componentName));
-	}, [saving.component])
+			dispatch(onShowSaving(componentName));
+	}, [saving])
 
-	const clearMessage = () => {
-		dispatch(onClearSaving());
+	const clearMessage = (componentName) => {
+		dispatch(onClearSaving(componentName));
 	}
 
 	return {

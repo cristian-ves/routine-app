@@ -9,7 +9,7 @@ export const useScheduleStore = () => {
 
 	const events = useSelector(state => state.events);
 	const { user } = useAuthStore();
-	const { showMessage, clearMessage } = useUiStore();
+	const { showMessage } = useUiStore();
 
 	const editEvent = event => { //only in the state, the backend or local storage will the autoSave function do it in useListItemTask.js
 		showMessage('schedule');

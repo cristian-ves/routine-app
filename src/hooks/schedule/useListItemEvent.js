@@ -41,9 +41,9 @@ export const useListItemEvent = (event) => {
 
 	return [
 		handleInputChange,
-		handleDatePickerChange,
+		handleDatePickerChange, //onChildrenChange
 		deleteEvent,
-		event.time,
+		event.time, //childrenValue
 		autoSave
 	]
 }

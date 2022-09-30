@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { useUiStore } from './';
 
-export const useAutoSave = (values, save, isClearingMessage = true, timeMS = 2000) => {
+export const useAutoSave = (values, save, componentName, timeMS = 2000) => {
 
 	const { clearMessage } = useUiStore();
 
@@ -16,7 +16,7 @@ export const useAutoSave = (values, save, isClearingMessage = true, timeMS = 200
 	const debouncedSave = useCallback(
 		debounce(async (values) => {
 			save(values);
-			if (isClearingMessage) clearMessage();
+			clearMessage(componentName);
 
 		}, timeMS),
 		[]
