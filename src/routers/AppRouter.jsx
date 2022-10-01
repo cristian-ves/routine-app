@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
+
 import { Spinner } from '../auth';
 import { useAuthStore } from '../hooks'
-
 import { DashboardRoutes, AuthRoutes } from './'
+import { auth } from '../firebase/firebase-config.js'
 
 export const AppRouter = () => {
 
-	const { status, checkUserExistence } = useAuthStore();
+	const { user, status, checkAuthentication } = useAuthStore();
 
 	useEffect(() => {
-		checkUserExistence();
+		checkAuthentication();
 	}, []);
 
 	if (status == 'checking') {

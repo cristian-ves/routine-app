@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from 'react-redux'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
 import Swal from 'sweetalert2';
 
 import { auth, provider } from '../firebase/firebase-config';
@@ -24,19 +24,6 @@ export const useAuthStore = () => {
 		dispatch(onLogin(user))
 
 	}
-
-	const checkUserExistence = () => { // check if a user exists in the localStorage, works for withoutAcc
-
-		const user = JSON.parse(localStorage.getItem('user'));
-
-		if (user != null) {
-			return dispatch(onLogin(user));
-		}
-
-		dispatch(onLogout());
-
-	}
-
 
 	const startRegisterWithEmailPasswordName = (email, password, name) => {
 		return (dispatch) => {
@@ -105,18 +92,48 @@ export const useAuthStore = () => {
 
 			    // ...
 				}).catch(error => {
-					Swal.fire('Error signing up', 'There was a problem, please try again', 'error');
+					Swal.fire('Error signing in', 'There was a problem, please try again', 'error');
 					dispatch(onLogout());
 				})
 
 		}
 	}
 
-	const startLogout = () => {
-		localStorage.clear();
-		dispatch(onLogoutCalendar());
-		dispatch(onLogout());
+	const checkAuthentication = () => {
+
+		if (!user.name) {
+
+			onAuthStateChanged(auth, async user => {
+
+				if (!user) return dispatch(onLogout());
+				dispatch(onLogin({
+					name: user.displayName,
+					uid: user.uid
+				}))
+
+			} )
+
+		} else {
+
+			const user = JSON.parse(localStorage.getItem('user'));
+
+			if (user != null) {
+				return dispatch(onLogin(user));
+			}
+
+			dispatch(onLogout());
+
+		}
+
 	}
+
+const logOut = () => {
+	signOut(auth).then(() => {
+		dispatch(onLogout())
+	}).catch((error) => {
+		Swal.fire('Error', 'There was an error signing out, please try again', 'error')
+	});
+}
 
 	return {
 		//* Properties
@@ -124,27 +141,11 @@ export const useAuthStore = () => {
 		user,
 
 		//* Methods
-		checkUserExistence,
+		checkAuthentication,
 		loginWithoutAcc,
 		startLoginWithEmailPassword,
-		startLogout,
 		startRegisterWithEmailPasswordName,
 		startLoginWithGoogle
 	}
 
 }
-
-//onAuthStateChanged(auth, (user) => {
-//   if(user) {
-//
-//     dispatch(onLogin({
-//       name: user.displayName,
-//       uid: user.uid
-//     }))
-//
-//   } else {
-//
-//      dispatch(onLogout());
-//
-//   }
-// })
