@@ -10,17 +10,13 @@ export const useDaysStore = () => {
 	const dispatch = useDispatch();
 	const { user } = useAuthStore();
 
-	const loadAll = () => {
+	const loadAll = async () => {
 
 		startCronometerForTomorrow();
 
-		let currentDay;
+		let currentDay = await getCurrentDay(user.uid);
 
-		if (user.uid) { //Todo: load from backend
-
-		} else {
-			currentDay = getCurrentDay();
-		}
+		console.log(currentDay);
 
 		dispatch(onLoadEvents(currentDay.events));
 		dispatch(onLoadObjectives(currentDay.objectives));

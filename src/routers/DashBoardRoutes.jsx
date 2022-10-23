@@ -11,7 +11,6 @@ export const DashboardRoutes = memo(() => {
 
 	useEffect(() => {
 		loadAll();
-
 	}, [])
 
 

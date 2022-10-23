@@ -1,2 +1,2 @@
-export * from './localStorageDb';
+export * from './currentDay';
 export * from './getEnvVariables';
