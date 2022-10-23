@@ -8,7 +8,7 @@ import { onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
 
-	const { status, user} = useSelector(state => state.auth)
+	const { status, user } = useSelector(state => state.auth)
 	const dispatch = useDispatch();
 
 	const loginWithoutAcc = ({ name }) => {
@@ -78,19 +78,19 @@ export const useAuthStore = () => {
 		return (dispatch) => {
 
 			signInWithPopup(auth, provider)
-				.then (result => {
+				.then(result => {
 					// This gives you a Google Access Token. You can use it to access the Google API.
-			    const credential = GoogleAuthProvider.credentialFromResult(result);
-			    const token = credential.accessToken;
-			    // The signed-in user info.
-			    const user = result.user;
+					const credential = GoogleAuthProvider.credentialFromResult(result);
+					const token = credential.accessToken;
+					// The signed-in user info.
+					const user = result.user;
 
 					dispatch(onLogin({
 						name: user.displayName,
 						uid: user.uid
 					}))
 
-			    // ...
+					// ...
 				}).catch(error => {
 					Swal.fire('Error signing in', 'There was a problem, please try again', 'error');
 					dispatch(onLogout());
@@ -111,7 +111,7 @@ export const useAuthStore = () => {
 					uid: user.uid
 				}))
 
-			} )
+			})
 
 		} else {
 
@@ -127,13 +127,13 @@ export const useAuthStore = () => {
 
 	}
 
-const logOut = () => {
-	signOut(auth).then(() => {
-		dispatch(onLogout())
-	}).catch((error) => {
-		Swal.fire('Error', 'There was an error signing out, please try again', 'error')
-	});
-}
+	const logOut = () => {
+		signOut(auth).then(() => {
+			dispatch(onLogout())
+		}).catch((error) => {
+			Swal.fire('Error', 'There was an error signing out, please try again', 'error')
+		});
+	}
 
 	return {
 		//* Properties
@@ -143,9 +143,10 @@ const logOut = () => {
 		//* Methods
 		checkAuthentication,
 		loginWithoutAcc,
+		logOut,
 		startLoginWithEmailPassword,
+		startLoginWithGoogle,
 		startRegisterWithEmailPasswordName,
-		startLoginWithGoogle
 	}
 
 }

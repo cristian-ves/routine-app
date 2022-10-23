@@ -7,23 +7,8 @@ import { useAuthStore } from '../../hooks';
 export const Navbar = () => {
 
 
-	const { user } = useAuthStore();
+	const { user, logOut } = useAuthStore();
 	const { name } = user;
-	// const { user, dispatch } = useContext(AuthContext);
-	// const { name } = user;
-
-	/* TODO: Logout
-		const handleLogout = () => {
-
-		dispatch({
-			type: types.logout
-		});
-
-		navigate('/login', {
-			replace: true
-		});
-
-	} */
 
 	return (
 		<nav >
@@ -32,6 +17,11 @@ export const Navbar = () => {
 			<div>
 				<span>{name}</span>&ensp;
 				<i className="fa-solid fa-user"></i>
+			</div>
+			<div
+				onClick={logOut}
+			>
+				logout
 			</div>
 		</nav>
 	)

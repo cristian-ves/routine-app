@@ -3,11 +3,10 @@ import { useEffect } from 'react';
 import { Spinner } from '../auth';
 import { useAuthStore } from '../hooks'
 import { DashboardRoutes, AuthRoutes } from './'
-import { auth } from '../firebase/firebase-config.js'
 
 export const AppRouter = () => {
 
-	const { user, status, checkAuthentication } = useAuthStore();
+	const { status, checkAuthentication } = useAuthStore();
 
 	useEffect(() => {
 		checkAuthentication();

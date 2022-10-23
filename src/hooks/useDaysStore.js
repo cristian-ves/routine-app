@@ -16,8 +16,6 @@ export const useDaysStore = () => {
 
 		let currentDay = await getCurrentDay(user.uid);
 
-		console.log(currentDay);
-
 		dispatch(onLoadEvents(currentDay.events));
 		dispatch(onLoadObjectives(currentDay.objectives));
 		dispatch(onLoadTasks(currentDay.tasks));
