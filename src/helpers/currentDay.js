@@ -9,34 +9,21 @@ export const getCurrentDay = async id => {
 	if (id) {
 
 		const viteVar = getEnvVariables();
-
 		const daysCollectionRef = collection(db, viteVar.MODE, id, 'days');
+		const startOfTodayMs = String(startOfToday().getTime());
+		const docRef = doc(daysCollectionRef, startOfTodayMs);
 
-		const q = query(daysCollectionRef, where('date', '==', startOfToday()));
-		const querySnapshot = await getDocs(q);
+		const currentDaySnap = await getDoc(docRef);
 
-		let currentDay;
+		if (currentDaySnap.exists()) return currentDaySnap.data();
 
-		if (!querySnapshot.empty) {
-			currentDay = querySnapshot.docs[0].data();
-			return {
-				...currentDay,
-				date: fromUnixTime(currentDay.date),
-				events: currentDay.events.map(event => ({
-					...event,
-					time: fromUnixTime(event.time)
-				}))
-
-			};
-		}
-
-		currentDay = {
+		const currentDay = {
 			date: startOfToday(),
 			tasks: [],
 			objectives: [],
 			events: []
 		}
-		await addDoc(daysCollectionRef, currentDay);
+		await setDoc(docRef, currentDay);
 		return currentDay;
 
 	} else {
@@ -68,17 +55,28 @@ export const getCurrentDay = async id => {
 	}
 }
 
-export const updateCurrentDay = (newCurrentDay) => {
+export const updateCurrentDay = async (newCurrentDay, id) => {
 
-	let days = JSON.parse(localStorage.getItem('days')) || [];
+	if (id) {
 
-	days = days.map(day => {
-		if (day.id === newCurrentDay.id) {
-			return newCurrentDay;
-		}
-		return day;
-	})
+		const viteVar = getEnvVariables();
+		const docRef = doc(db, viteVar.MODE, id, 'days', String(startOfToday().getTime()));
 
-	localStorage.setItem('days', JSON.stringify(days));
+
+		setDoc(docRef, newCurrentDay, { merge: true })
+
+	} else {
+
+		let days = JSON.parse(localStorage.getItem('days')) || [];
+
+		days = days.map(day => {
+			if (day.id === newCurrentDay.id) {
+				return newCurrentDay;
+			}
+			return day;
+		})
+
+		localStorage.setItem('days', JSON.stringify(days));
+	}
 
 }

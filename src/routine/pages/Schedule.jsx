@@ -1,5 +1,4 @@
 
-import { useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
 import { useScheduleStore, useListItemEvent } from '../../hooks/';

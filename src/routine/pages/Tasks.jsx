@@ -1,6 +1,4 @@
 
-import { useEffect } from 'react';
-
 import { useTasksStore, useListItemTask } from '../../hooks';
 import { List } from '../';
 

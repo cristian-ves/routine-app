@@ -28,26 +28,20 @@ export const useScheduleStore = () => {
 		dispatch(onDeleteEvent(id));
 	}
 
-	const addEvent = () => {
+	const addEvent = async () => {
 
-		let newEvent;
-		if (user.uid) {
-			// Todo: Add event from the backend
-		} else {
-			const id = new Date().getTime();
-			newEvent = {
-				name: '',
-				time: id,
-				id
-			};
-			const currentDay = getCurrentDay();
-			currentDay.events.push(newEvent);
-
-			updateCurrentDay(currentDay);
-
-		}
+		const id = new Date().getTime();
+		const newEvent = {
+			name: '',
+			time: id,
+			id
+		};
+		const currentDay = await getCurrentDay(user.uid);
+		currentDay.events.push(newEvent);
+		updateCurrentDay(currentDay, user.uid);
 
 		dispatch(onAddEvent(newEvent));
+
 	}
 
 

@@ -23,21 +23,16 @@ export const useListItemObjective = (objective) => {
 	}
 
 
-	const autoSave = (objective) => {
-		if (user.uid) {
-			//Todo: Update task in backend
-		} else {
-			// update localStorage task
+	const autoSave = async (objective) => {
 
-			let currentDay = getCurrentDay();
-			const objectives = currentDay.objectives.map(storageObjective => (
-				(objective.id === storageObjective.id) ? objective : storageObjective
-			));
+		let currentDay = await getCurrentDay(user.uid);
+		const objectives = currentDay.objectives.map(dbObjective => (
+			(objective.id === dbObjective.id) ? objective : dbObjective
+		));
+		currentDay.objectives = objectives;
 
-			currentDay.objectives = objectives;
+		updateCurrentDay(currentDay, user.uid);
 
-			updateCurrentDay(currentDay);
-		}
 	}
 
 	return [

@@ -30,24 +30,20 @@ export const useObjectivesStore = () => {
 		dispatch(onDeleteObjective(id));
 	}
 
-	const addObjective = () => {
-		let newObjective;
-		if (user.uid) {
-			// Todo: Add objective from the backend
-		} else {
+	const addObjective = async () => {
 
-			newObjective = {
-				name: '',
-				progress: 50,
-				id: new Date().getTime()
-			};
-			const currentDay = getCurrentDay();
-			currentDay.objectives.push(newObjective);
+		const newObjective = {
+			name: '',
+			progress: 50,
+			id: new Date().getTime()
+		};
 
-			updateCurrentDay(currentDay);
+		const currentDay = await getCurrentDay(user.uid);
+		currentDay.objectives.push(newObjective);
+		updateCurrentDay(currentDay, user.uid);
 
-		}
 		dispatch(onAddObjective(newObjective));
+
 	}
 
 	const loadObjectives = () => {

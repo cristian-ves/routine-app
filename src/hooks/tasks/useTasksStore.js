@@ -29,23 +29,17 @@ export const useTasksStore = () => {
 		dispatch(onDeleteTask(id));
 	}
 
-	const addTask = () => {
+	const addTask = async () => {
 
-		let newTask;
-		if (user.uid) {
-			// Todo: Add task from the backend
-		} else {
-			newTask = {
-				name: '',
-				done: false,
-				id: new Date().getTime()
-			};
+		const newTask = {
+			name: '',
+			done: false,
+			id: new Date().getTime()
+		};
+		const currentDay = await getCurrentDay(user.uid);
+		currentDay.tasks.push(newTask);
+		updateCurrentDay(currentDay, user.uid);
 
-			const currentDay = getCurrentDay();
-			currentDay.tasks.push(newTask);
-
-			updateCurrentDay(currentDay);
-		}
 		dispatch(onAddTask(newTask));
 	}
 

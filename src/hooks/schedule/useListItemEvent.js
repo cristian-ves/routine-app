@@ -23,20 +23,16 @@ export const useListItemEvent = (event) => {
 		});
 	}
 
-	const autoSave = (event) => {
-		if (user.uid) {
-			//Update task in backendanima
-		} else {
-			// update localStorage task
-			let currentDay = getCurrentDay();
-			const events = currentDay.events.map(storageEvent => (
-				(event.id === storageEvent.id) ? event : storageEvent
-			));
+	const autoSave = async (event) => {
 
-			currentDay.events = events;
+		let currentDay = await getCurrentDay(user.uid);
+		const events = currentDay.events.map(dbEvent => (
+			(event.id === dbEvent.id) ? event : dbEvent
+		));
+		currentDay.events = events;
 
-			updateCurrentDay(currentDay);
-		}
+		updateCurrentDay(currentDay, user.uid);
+
 	}
 
 	return [

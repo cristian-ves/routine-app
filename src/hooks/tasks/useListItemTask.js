@@ -23,20 +23,16 @@ export const useListItemTask = (task) => {
 		});
 	}
 
-	const autoSave = (task) => {
-		if (user.uid) {
-			//Save task in backend
-		} else {
-			// update localStorage task
+	const autoSave = async (task) => {
 
-			let currentDay = getCurrentDay();
-			const tasks = currentDay.tasks.map(storageTask => (
-				(task.id === storageTask.id) ? task : storageTask
-			));
+		let currentDay = await getCurrentDay(user.uid);
+		const tasks = currentDay.tasks.map(dbTask => (
+			(task.id === dbTask.id) ? task : dbTask
+		));
+		currentDay.tasks = tasks;
 
-			currentDay.tasks = tasks;
-			updateCurrentDay(currentDay);
-		}
+		updateCurrentDay(currentDay, user.uid);
+
 	}
 
 	return [
